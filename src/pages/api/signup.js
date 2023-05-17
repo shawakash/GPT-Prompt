@@ -34,7 +34,7 @@ const handler = async (req, res) => {
 
             
             if(createdUser) {
-                const accessToken = jwt.sign({ email, name, password: createdUser.password, username }, `${process.env.JWT_SECRET_KEY}`);
+                const accessToken = jwt.sign({ email, name, password: createdUser.password, username }, `${process.env.JWT_SECRET_KEY}`, { expiresIn: '10d' });
                 return res.status(200).send(wrapResponse.success(200, { user: createdUser, accessToken}));;
             }
 
