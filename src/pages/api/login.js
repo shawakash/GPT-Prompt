@@ -6,7 +6,7 @@ import * as jwt from 'jsonwebtoken';
 
 const handler = async (req, res) => {
     if(req.method == 'POST') {
-        const { username,  password } = req.body;
+        const { username,  password } = JSON.parse(req.body);
         if( !username || !password || username == '' || password == '' ) {
             return res.status(400).send(wrapResponse.error(400, 'Necessary Fields are missing :('));
         }
@@ -25,7 +25,12 @@ const handler = async (req, res) => {
                 return res.status(400).send(wrapResponse.error(400, 'Incorrect Password :('));
             }
             const accessToken = jwt.sign({ email: existingUser.email, username: existingUser.username, password: decodedPassword, name: existingUser.name }, `${process.env.JWT_SECRET_KEY}`, { expiresIn: '10d' })
-            return res.status(200).send(wrapResponse.success(200, { user: existingUser, accessToken }))
+            const user = {
+                name: existingUser.name,
+                email: existingUser.email,
+                username: existingUser.username
+            }
+            return res.status(200).send(wrapResponse.success(200, { user, accessToken }))
 
         } catch (e) {
             return res.status(500).send(wrapResponse.error(500, e.message))
