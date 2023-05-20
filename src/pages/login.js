@@ -5,6 +5,7 @@ import { Button, Checkbox, Form, Input } from "antd"
 import Link from 'next/link';
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
+import styles from '@/utils/styles';
 
 const Login = () => {
 
@@ -40,7 +41,7 @@ const Login = () => {
             <Head>
                 <title>Login  |  GPT-Prompt</title>
             </Head>
-            <div className={`flex justify-center items-center h-screen`}>
+            <div className={`flex items-center justify-center h-screen bg-slate-100`}>
                 <div className="flex ">
                     <Form
                         name="normal_login"
@@ -48,10 +49,10 @@ const Login = () => {
                             remember: true,
                         }}
                         onFinish={onFinish}
-                        className={`login-form flex gap-y-3 flex-col border-2 p-4 rounded-lg shadow-lg hover:shadow-2xl tracking-wide transition-all sm:w-72 sm:h-80 md:p-8 md:w-96 md:h-full md:gap-y-5 lg:gap-y-8 `}
+                        className={`login-form flex gap-y-3 flex-col border-2 bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl tracking-wide transition-all sm:w-72 sm:h-80 md:p-8 md:w-96 md:h-full md:gap-y-5 lg:gap-y-8 `}
                         
                     >
-                        <div className="head text-xl font-semibold text-center mb-3 ">Login</div>
+                        <div className={`head text-xl font-semibold text-center mb-3`}>Login</div>
                         <Form.Item
                             name="username"
                             rules={[
