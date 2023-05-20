@@ -2,12 +2,13 @@ import wrapResponse from "@/utils/wrapResponse";
 import connectDb from "../../../middleware/connectDb"
 import User from "../../../models/User";
 import * as jwt from "jsonwebtoken";
+import { cookies } from "next/dist/client/components/headers";
 var CryptoJS = require('crypto-js');
 
 
 const handler = async (req, res) => {
     if(req.method == 'POST') {
-        const { email, name, username, phone, password } = req.body;
+        const { email, name, username, phone, password } = JSON.parse(req.body);
 
         if(!email || !name || !username || !password || email == '' || name == '' || username == '' || password == '' ) {
             return res.status(400).send(wrapResponse.error(400, 'Necessary Fields are missing :('));
@@ -35,6 +36,10 @@ const handler = async (req, res) => {
             
             if(createdUser) {
                 const accessToken = jwt.sign({ email, name, password: createdUser.password, username }, `${process.env.JWT_SECRET_KEY}`, { expiresIn: '10d' });
+                res.cookie('jwt', accessToken, {
+                    httpOnly: true,               // can be only accessed by backend
+                    secure: true
+                });
                 return res.status(200).send(wrapResponse.success(200, { user: createdUser, accessToken}));;
             }
 

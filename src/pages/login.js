@@ -16,7 +16,6 @@ const Login = () => {
             username: values.username,
             password: values.password
         }
-        console.log(body)
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/login`, {
             method: 'POST',
             body: JSON.stringify(body)
@@ -31,7 +30,7 @@ const Login = () => {
             localStorage.setItem('accessToken', jsonData.result.accessToken);
             localStorage.setItem('user', JSON.stringify(jsonData.result.user));
             toast.success('Logged In');
-            router.push('/');
+            router.push(`/?${jsonData.result.user.username}`);
         }
     };
 

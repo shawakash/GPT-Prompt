@@ -21,7 +21,14 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: Number
-    }
+    },
+    prompts: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Prompt',
+            default: []
+        }
+    ]
 },{
     timestamps: true
 });
